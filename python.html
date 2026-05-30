@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Aptitude Mastery | Python Core Topics</title>
+    <!-- Font Awesome 6 (free icons for clean modern look) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1f33 0%, #0f2c46 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* ---------- glass & utility ---------- */
+        .glass-card {
+            background: rgba(31, 58, 86, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* ---------- sticky navbar (exactly as provided) ---------- */
+        .navbar {
+            background-color: #0a1f33;  /* solid dark navy */
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #1f3e5c;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span:first-child {
+            color: white;
+        }
+        .logo span:last-child {
+            color: #f5b942;   /* golden accent */
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #f5b942;
+            transition: width 0.2s ease;
+        }
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        .nav-menu a:hover {
+            text-shadow: 0 0 6px #f2c46d;
+            color: #ffffff;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: default;
+            background-color: rgba(10, 31, 51, 0.8);
+            text-decoration: none;
+        }
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+            text-decoration: none;
+        }
+
+        /* ---------- main heading section (elegant) ---------- */
+        .hero-section {
+            text-align: center;
+            margin: 3rem 0 1.2rem 0;
+        }
+        .hero-section h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #fff, #f5b942);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .gold-divider {
+            width: 140px;
+            height: 4px;
+            background: #f5b942;
+            margin: 0.5rem auto 1.5rem auto;
+            border-radius: 4px;
+            box-shadow: 0 0 12px #f5b942;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #ccddee;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* ---------- GRID OF CARDS (modern responsive) ---------- */
+        .cards-grid {
+            max-width: 1400px;
+            margin: 0 auto 4rem auto;
+            padding: 1.5rem 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem 1.8rem;
+        }
+
+        /* CARD STYLES: rounded corners, soft shadow, center text */
+        .topic-card {
+            background: rgba(25, 55, 80, 0.65);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 1.8rem 1.2rem 1.8rem 1.2rem;
+            box-shadow: 0 20px 32px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid rgba(245, 185, 66, 0.2);
+            cursor: pointer;
+            opacity: 0;  /* hidden for fade-in animation */
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.6s ease forwards;
+        }
+
+        /* staggered fade-in for each card */
+        .topic-card:nth-child(1) { animation-delay: 0.05s; }
+        .topic-card:nth-child(2) { animation-delay: 0.12s; }
+        .topic-card:nth-child(3) { animation-delay: 0.19s; }
+        .topic-card:nth-child(4) { animation-delay: 0.26s; }
+        .topic-card:nth-child(5) { animation-delay: 0.33s; }
+        .topic-card:nth-child(6) { animation-delay: 0.40s; }
+        .topic-card:nth-child(7) { animation-delay: 0.47s; }
+        .topic-card:nth-child(8) { animation-delay: 0.54s; }
+        .topic-card:nth-child(9) { animation-delay: 0.61s; }
+        .topic-card:nth-child(10) { animation-delay: 0.68s; }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HOVER EFFECT: scale up + shadow increase + smooth transition */
+        .topic-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 32px 48px -12px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(245, 185, 66, 0.5);
+            background: rgba(40, 75, 105, 0.8);
+            backdrop-filter: blur(12px);
+            transition: all 0.32s ease-out;
+        }
+
+        /* card icon style */
+        .card-icon {
+            font-size: 2.5rem;
+            background: rgba(245, 185, 66, 0.2);
+            width: 65px;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            margin-bottom: 1.2rem;
+            color: #f5b942;
+            transition: 0.2s;
+        }
+        .topic-card:hover .card-icon {
+            background: rgba(245, 185, 66, 0.35);
+            transform: scale(1.02);
+        }
+
+        .topic-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .topic-desc {
+            font-size: 0.85rem;
+            color: #cfdfef;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .badge-python {
+            background: #306998;
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.9rem;
+            letter-spacing: 0.5px;
+            color: #e9f1fa;
+        }
+
+        /* ---------- footer (exactly same structure, updated with style) ---------- */
+        .footer {
+            background-color: #0a1f33;
+            padding: 1.8rem 2.5rem;
+            margin-top: auto;
+            border-top: 1px solid #1f3e5c;
+            color: #cbd5e1;
+        }
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-copy {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+        .footer-copy strong {
+            color: white;
+            font-weight: 600;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .footer-links a:hover {
+            color: #f5b942;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .social-icons a {
+            color: #cbd5e1;
+            transition: 0.2s;
+        }
+        .social-icons a:hover {
+            color: #f5b942;
+            transform: translateY(-3px);
+        }
+
+        /* responsiveness improvements */
+        @media (max-width: 900px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .nav-menu { gap: 1.2rem; }
+            .hero-section h1 { font-size: 2.5rem; }
+            .cards-grid { padding: 1.2rem 1.5rem; gap: 1.5rem; }
+        }
+        @media (max-width: 700px) {
+            .nav-menu { order: 3; width: 100%; margin-top: 1rem; justify-content: center; gap: 1rem; }
+            .profile-btn { margin-left: auto; }
+            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+            .hero-section h1 { font-size: 2rem; }
+            .topic-title { font-size: 1.2rem; }
+            .footer-container { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .cards-grid { padding: 1rem; gap: 1rem; }
+            .topic-card { padding: 1.3rem 0.9rem; }
+        }
+
+        /* optional small glow for modern touch */
+        .topic-card:active {
+            transform: scale(0.98);
+            transition: 0.08s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation bar: exactly as provided, no extra links added -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>Placement</span><span>Prep</span>
+        </div>
+           <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+    </nav>
+
+    <!-- Hero Section (clean, centered heading) -->
+    <div class="hero-section">
+        <h1>📘 Python Aptitude<span style="color:#f5b942;"> · Core Concepts</span></h1>
+        <div class="gold-divider"></div>
+        <div class="subhead">Master fundamental topics through interactive cards — hover to feel the pop effect!</div>
+    </div>
+
+    <!-- GRID OF TOPICS: exactly 10 boxes with required topics -->
+    <div class="cards-grid" id="aptitudeGrid">
+        <!-- The 10 topics will be injected via JavaScript to keep code clean, but we could also hardcode.
+             We'll generate them using JS to keep maintenance easy, but exactly follow given list. -->
+    </div>
+
+    <!-- Footer (exactly matching your structure) -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-copy">
+                &copy; 2025 <strong>PlacementPrep</strong> — All things Python & Aptitude
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Support</a>
+            </div>
+            <div class="social-icons">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---------- Aptitude topics array (exactly as required, 10 items) ----------
+        const topicsData = [
+            {
+                title: "Variables & Data Types",
+                desc: "Integers, floats, strings, booleans — dynamic typing & type conversion.",
+                icon: "fa-solid fa-database"
+            },
+            {
+                title: "Control Flow (if, loops)",
+                desc: "if-elif-else, for/while loops, break, continue — decision makers.",
+                icon: "fa-solid fa-diagram-project"
+            },
+            {
+                title: "Functions & Lambda",
+                desc: "def, return, parameters, lambda expressions, scope & recursion.",
+                icon: "fa-solid fa-code-branch"
+            },
+            {
+                title: "Lists, Tuples, Sets, Dictionaries",
+                desc: "Collections, mutability, methods, dict keys, set operations.",
+                icon: "fa-solid fa-layer-group"
+            },
+            {
+                title: "String Manipulation",
+                desc: "slicing, formatting, methods like split(), join(), replace().",
+                icon: "fa-solid fa-font"
+            },
+            {
+                title: "File Handling",
+                desc: "open(), read/write, with context, CSV & text file operations.",
+                icon: "fa-regular fa-file-lines"
+            },
+            {
+                title: "Modules & Packages",
+                desc: "import, from, custom modules, __name__ and package structure.",
+                icon: "fa-solid fa-cubes"
+            },
+            {
+                title: "Exception Handling",
+                desc: "try/except/else/finally, raise custom exceptions, debugging.",
+                icon: "fa-solid fa-bug"
+            },
+            {
+                title: "OOP in Python (Class, Object)",
+                desc: "classes, objects, inheritance, encapsulation, polymorphism.",
+                icon: "fa-solid fa-crown"
+            },
+            {
+                title: "List Comprehensions",
+                desc: "concise syntax, nested comprehensions, map/filter style.",
+                icon: "fa-solid fa-chart-simple"
+            }
+        ];
+
+        // Get grid container
+        const gridContainer = document.getElementById('aptitudeGrid');
+
+        // Build all cards dynamically (keeps code DRY and matches the requirement exactly)
+        function buildCards() {
+            if (!gridContainer) return;
+            gridContainer.innerHTML = '';  // ensure clean (though no duplicates)
+
+            topicsData.forEach((topic, idx) => {
+                // Create card div
+                const card = document.createElement('div');
+                card.className = 'topic-card';
+                // Optionally add a data attribute for debugging
+                card.setAttribute('data-topic', topic.title);
+
+                // inner structure: icon, title, description, small badge
+                // Icon container
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'card-icon';
+                const iconElem = document.createElement('i');
+                // Use FontAwesome classes: if icon string includes "fa-" we assign both
+                iconElem.className = topic.icon;  // e.g., "fa-solid fa-database"
+                iconDiv.appendChild(iconElem);
+
+                // Title element
+                const titleElem = document.createElement('h3');
+                titleElem.className = 'topic-title';
+                titleElem.textContent = topic.title;
+
+                // Description element
+                const descElem = document.createElement('p');
+                descElem.className = 'topic-desc';
+                descElem.textContent = topic.desc;
+
+                // Tiny badge for python flavor
+                const badgeSpan = document.createElement('span');
+                badgeSpan.className = 'badge-python';
+                badgeSpan.innerHTML = '<i class="fa-brands fa-python" style="margin-right: 5px;"></i> core';
+
+                // Append all to card
+                card.appendChild(iconDiv);
+                card.appendChild(titleElem);
+                card.appendChild(descElem);
+                card.appendChild(badgeSpan);
+
+                // Optional: small interactive console log on click (just playful)
+                card.addEventListener('click', () => {
+                    // you can implement any future detail, but not mandatory
+                    console.log(`📌 Selected: ${topic.title}`);
+                });
+
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // Optional: add tiny extra micro-interaction with smooth page load fade (already done via CSS)
+        // For extra polish: add a small intersection observer for background fade? Not necessary, but keep robust.
+
+        // Call builder when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            buildCards();
+
+            // Additional tiny feature: after all cards are rendered, ensure no duplicate or missing items.
+            // This also confirms we have exactly 10 boxes.
+            const allCards = document.querySelectorAll('.topic-card');
+            if (allCards.length === 10) {
+                console.log('✅ 10 aptitude topic cards successfully rendered.');
+            } else {
+                console.warn('⚠️ card count mismatch, but topics are correct.');
+            }
+
+            // For extra safe responsiveness: re-check any dynamic text scaling (nothing needed)
+        });
+
+        // Optional window load animation synergy: because CSS already triggers fade-in on cards,
+        // we guarantee even if JS loads a bit later, cards will appear with correct animation.
+        // For extra polished look, ensure no FOUC.
+        window.addEventListener('load', () => {
+            // tiny graceful fix: If any card missing box shadow due to rendering, just enforce consistency.
+            // All cards already visible because they are created before load? Actually DOMContentLoaded already builds them,
+            // but style sheet fully loaded anyway.
+            document.body.style.opacity = 1;
+        });
+    </script>
+</body>
+</html>

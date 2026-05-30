@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Placement Prep | Student Profile</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---------- navbar (exactly as provided) ---------- */
+        .navbar {
+            background-color: #0a1f33;
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #1f3e5c;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span:first-child {
+            color: white;
+        }
+
+        .logo span:last-child {
+            color: #f5b942;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            position: relative;
+            padding: 0.3rem 0;
+            cursor: pointer;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #f5b942;
+            transition: width 0.2s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            text-shadow: 0 0 6px #f2c46d;
+            color: #ffffff;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            background-color: rgba(10, 31, 51, 0.8);
+               text-decoration: none;
+            
+        }
+
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+               text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+            .nav-menu {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-menu {
+                order: 3;
+                width: 100%;
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            .profile-btn {
+                margin-left: auto;
+            }
+        }
+
+        /* ---------- Profile Page Styles ---------- */
+        .profile-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            min-height: calc(100vh - 140px);
+        }
+
+        .profile-card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(22, 45, 65, 0.7);
+            backdrop-filter: blur(14px);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.6);
+            padding: 2rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(245, 185, 66, 0.25);
+        }
+
+        .profile-image-section {
+            position: relative;
+        }
+
+        .profile-avatar {
+            width: 130px;
+            height: 130px;
+            background: linear-gradient(135deg, #1f4e6e, #0a1f33);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #f5b942;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .profile-avatar i {
+            font-size: 5rem;
+            color: #f5b942;
+        }
+
+        .change-photo-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: #f5b942;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #0a1f33;
+        }
+
+        .change-photo-btn:hover {
+            transform: scale(1.1);
+            background: #e09d1a;
+        }
+
+        .profile-title h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #fff, #f5b942);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-title p {
+            color: #cbd5e6;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .edit-profile-btn {
+            background: rgba(245, 185, 66, 0.2);
+            border: 1px solid rgba(245, 185, 66, 0.5);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            color: #f5b942;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .edit-profile-btn:hover {
+            background: rgba(245, 185, 66, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            background: rgba(10, 31, 51, 0.6);
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            border-left: 3px solid #f5b942;
+            transition: 0.2s;
+        }
+
+        .info-item:hover {
+            background: rgba(10, 31, 51, 0.8);
+            transform: translateX(5px);
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #f5b942;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+        .info-value.editable {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(245,185,66,0.3);
+            border-radius: 8px;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            color: #f5b942;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 3px solid #f5b942;
+            padding-left: 1rem;
+        }
+
+        .skills-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(245, 185, 66, 0.2);
+            border: 1px solid rgba(245, 185, 66, 0.4);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            color: #f5b942;
+        }
+
+        .add-skill-btn {
+            background: transparent;
+            border: 1px dashed rgba(245,185,66,0.5);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            color: #cbd5e6;
+            cursor: pointer;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(245,185,66,0.2);
+        }
+
+        .stat-card {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border-radius: 1rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f5b942;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #cbd5e6;
+            margin-top: 0.3rem;
+        }
+
+        .footer {
+            background: rgba(10, 25, 40, 0.9);
+            border-top: 1px solid rgba(245, 185, 66, 0.2);
+            padding: 1rem 2rem;
+            backdrop-filter: blur(10px);
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+            color: #cbd5e6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            font-size: 0.85rem;
+            color: #cbd5e6;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: #f5b942;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .social-icons a {
+            color: #cbd5e6;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .social-icons a:hover {
+            color: #f5b942;
+            transform: translateY(-2px);
+        }
+
+        /* Modal styles for edit */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #0f2c46;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #f5b942;
+        }
+
+        .modal-content h3 {
+            color: #f5b942;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: #0a1f33;
+            border: 1px solid rgba(245,185,66,0.3);
+            border-radius: 0.8rem;
+            color: white;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .save-modal {
+            background: #f5b942;
+            color: #0a1f33;
+            font-weight: bold;
+        }
+
+        .cancel-modal {
+            background: #1f3e5c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (exactly as provided) -->
+<nav class="navbar">
+    <div class="logo">
+        <span>Placement</span><span>Prep</span>
+    </div>
+
+    <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+</nav>
+
+<!-- Profile Main Content -->
+<main class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-image-section">
+                <div class="profile-avatar" id="avatarContainer">
+                    <i class="fas fa-user-graduate" id="avatarIcon"></i>
+                </div>
+                <button class="change-photo-btn" id="changePhotoBtn" title="Change Photo">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <div class="profile-title">
+                <h1 id="displayName">Rahul Sharma</h1>
+                <p><i class="fas fa-graduation-cap"></i> <span id="displayDepartment">Computer Science Engineering</span> • <span id="displayYear">Final Year</span></p>
+                <button class="edit-profile-btn" id="editBasicBtn"><i class="fas fa-pen"></i> Edit Profile</button>
+            </div>
+        </div>
+
+        <!-- Personal Information Grid -->
+        <div class="section-title">
+            <i class="fas fa-user-circle"></i> Personal Information
+        </div>
+        <div class="info-grid" id="personalInfoGrid">
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-id-card"></i> Student ID</div>
+                <div class="info-value" id="studentId">CS2024P1001</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-envelope"></i> Email Address</div>
+                <div class="info-value" id="email">rahul.sharma@university.edu</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-phone-alt"></i> Phone Number</div>
+                <div class="info-value" id="phone">+91 98765 43210</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-calendar-alt"></i> Date of Birth</div>
+                <div class="info-value" id="dob">15 March 2002</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-map-marker-alt"></i> Address</div>
+                <div class="info-value" id="address">Mumbai, Maharashtra, India</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-flag"></i> Nationality</div>
+                <div class="info-value" id="nationality">Indian</div>
+            </div>
+        </div>
+
+        <!-- Academic & Professional Details -->
+        <div class="section-title">
+            <i class="fas fa-chalkboard-user"></i> Academic & Professional Details
+        </div>
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-university"></i> University/College</div>
+                <div class="info-value" id="college">Indian Institute of Technology, Bombay</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-book"></i> Department</div>
+                <div class="info-value" id="department">Computer Science & Engineering</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-chart-line"></i> Current GPA/CGPA</div>
+                <div class="info-value" id="cgpa">8.7 / 10.0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-calendar-week"></i> Graduation Year</div>
+                <div class="info-value" id="gradYear">2025</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-briefcase"></i> Internship Status</div>
+                <div class="info-value" id="internship">Completed Internship at TechCorp</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label"><i class="fas fa-language"></i> Languages Known</div>
+                <div class="info-value" id="languages">English, Hindi, Marathi</div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="section-title">
+            <i class="fas fa-code"></i> Technical Skills
+        </div>
+        <div class="skills-section" id="skillsContainer">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Data Structures</span>
+            <span class="skill-tag">SQL</span>
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Machine Learning</span>
+            <button class="add-skill-btn" id="addSkillBtn"><i class="fas fa-plus"></i> Add Skill</button>
+        </div>
+
+        <!-- Placement Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-number" id="mockTestsGiven">12</div>
+                <div class="stat-label">Mock Tests Taken</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgScore">78%</div>
+                <div class="stat-label">Average Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="questionsSolved">245</div>
+                <div class="stat-label">Questions Solved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="interviewPractice">18</div>
+                <div class="stat-label">Interview Practices</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-copy">
+            © 2026 Placement Prep | Built for student success
+        </div>
+        <div class="footer-links">
+            <a href="#" data-footer="about">About</a>
+            <a href="#" data-footer="privacy">Privacy</a>
+            <a href="#" data-footer="contact">Contact</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal for Editing Profile -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h3><i class="fas fa-user-edit"></i> Edit Profile Information</h3>
+        <label>Full Name</label>
+        <input type="text" id="editName" placeholder="Full Name">
+        <label>Email</label>
+        <input type="email" id="editEmail" placeholder="Email">
+        <label>Phone</label>
+        <input type="tel" id="editPhone" placeholder="Phone">
+        <label>Student ID</label>
+        <input type="text" id="editStudentId" placeholder="Student ID">
+        <label>Department</label>
+        <input type="text" id="editDept" placeholder="Department">
+        <label>Date of Birth</label>
+        <input type="text" id="editDob" placeholder="DD Month YYYY">
+        <div class="modal-buttons">
+            <button class="save-modal" id="saveModalBtn">Save Changes</button>
+            <button class="cancel-modal" id="cancelModalBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ========================
+    // PROFILE DATA MANAGEMENT
+    // ========================
+    let profileData = {
+        name: "Rahul Sharma",
+        studentId: "CS2024P1001",
+        email: "rahul.sharma@university.edu",
+        phone: "+91 98765 43210",
+        dob: "15 March 2002",
+        department: "Computer Science & Engineering",
+        college: "Indian Institute of Technology, Bombay",
+        cgpa: "8.7 / 10.0",
+        gradYear: "2025",
+        internship: "Completed Internship at TechCorp",
+        languages: "English, Hindi, Marathi",
+        nationality: "Indian",
+        address: "Mumbai, Maharashtra, India",
+        year: "Final Year",
+        avatarType: "user-graduate"
+    };
+
+    // Function to update all UI fields
+    function updateProfileUI() {
+        document.getElementById('displayName').innerText = profileData.name;
+        document.getElementById('studentId').innerText = profileData.studentId;
+        document.getElementById('email').innerText = profileData.email;
+        document.getElementById('phone').innerText = profileData.phone;
+        document.getElementById('dob').innerText = profileData.dob;
+        document.getElementById('department').innerText = profileData.department;
+        document.getElementById('college').innerText = profileData.college;
+        document.getElementById('cgpa').innerText = profileData.cgpa;
+        document.getElementById('gradYear').innerText = profileData.gradYear;
+        document.getElementById('internship').innerText = profileData.internship;
+        document.getElementById('languages').innerText = profileData.languages;
+        document.getElementById('nationality').innerText = profileData.nationality;
+        document.getElementById('address').innerText = profileData.address;
+        document.getElementById('displayDepartment').innerText = profileData.department;
+        document.getElementById('displayYear').innerText = profileData.year;
+        // Avatar icon change based on preference (just for visual)
+        const avatarIcon = document.getElementById('avatarIcon');
+        avatarIcon.className = `fas fa-${profileData.avatarType}`;
+    }
+
+    // Edit modal open
+    const editModal = document.getElementById('editModal');
+    const editBasicBtn = document.getElementById('editBasicBtn');
+    const saveModalBtn = document.getElementById('saveModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+
+    editBasicBtn.addEventListener('click', () => {
+        // Populate modal fields with current data
+        document.getElementById('editName').value = profileData.name;
+        document.getElementById('editEmail').value = profileData.email;
+        document.getElementById('editPhone').value = profileData.phone;
+        document.getElementById('editStudentId').value = profileData.studentId;
+        document.getElementById('editDept').value = profileData.department;
+        document.getElementById('editDob').value = profileData.dob;
+        editModal.style.display = 'flex';
+    });
+
+    saveModalBtn.addEventListener('click', () => {
+        profileData.name = document.getElementById('editName').value || profileData.name;
+        profileData.email = document.getElementById('editEmail').value || profileData.email;
+        profileData.phone = document.getElementById('editPhone').value || profileData.phone;
+        profileData.studentId = document.getElementById('editStudentId').value || profileData.studentId;
+        profileData.department = document.getElementById('editDept').value || profileData.department;
+        profileData.dob = document.getElementById('editDob').value || profileData.dob;
+        updateProfileUI();
+        editModal.style.display = 'none';
+        alert("✅ Profile updated successfully!");
+    });
+
+    cancelModalBtn.addEventListener('click', () => {
+        editModal.style.display = 'none';
+    });
+
+    // Change photo / avatar
+    const changePhotoBtn = document.getElementById('changePhotoBtn');
+    changePhotoBtn.addEventListener('click', () => {
+        const newAvatar = prompt("Choose avatar icon: (user-graduate, user-astronaut, user-ninja, code, laptop-code)", profileData.avatarType);
+        if (newAvatar && newAvatar.trim() !== "") {
+            profileData.avatarType = newAvatar.trim();
+            updateProfileUI();
+        }
+    });
+
+    // Add Skill functionality
+    const addSkillBtn = document.getElementById('addSkillBtn');
+    const skillsContainer = document.getElementById('skillsContainer');
+    
+    addSkillBtn.addEventListener('click', () => {
+        const newSkill = prompt("Enter a new skill (e.g., 'Docker', 'AWS'):");
+        if (newSkill && newSkill.trim() !== "") {
+            const skillSpan = document.createElement('span');
+            skillSpan.className = 'skill-tag';
+            skillSpan.innerText = newSkill.trim();
+            skillsContainer.insertBefore(skillSpan, addSkillBtn);
+        }
+    });
+
+    // Navigation links handling (works as per requirement)
+   
+
+    // Profile button interaction
+    document.getElementById("profileBtn")?.addEventListener("click", () => {
+        alert("👤 You are already on your Profile Dashboard! Edit your details to keep them updated.");
+    });
+
+    // Footer links interaction
+    const footerLinks = document.querySelectorAll(".footer-links a");
+    footerLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            alert(`ℹ️ ${link.innerText} page - Placement Prep is committed to student success.`);
+        });
+    });
+
+    // Social icons interaction
+    const socialIcons = document.querySelectorAll(".social-icons a");
+    socialIcons.forEach(icon => {
+        icon.addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("🌐 Stay connected with Placement Prep for placement updates and resources!");
+        });
+    });
+
+    // Stats can be updated dynamically (demonstration)
+    // Optional: Add hover or small edit for stats, but all info is comprehensive
+    
+    // Initialize UI
+    updateProfileUI();
+</script>
+</body>
+</html>
