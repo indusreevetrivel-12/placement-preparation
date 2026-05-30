@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlacementPrep | Professional Dashboard</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* subtle radial glow for depth */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(245, 158, 11, 0.03) 0%, rgba(15, 23, 42, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ---------- navbar (exactly as provided, only navigation given) ---------- */
+        .navbar {
+            background-color: #0a1f33;
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #1f3e5c;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span:first-child {
+            color: white;
+        }
+        .logo span:last-child {
+            color: #f5b942;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #f5b942;
+            transition: width 0.2s ease;
+        }
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        .nav-menu a:hover {
+            text-shadow: 0 0 6px #f2c46d;
+            color: #ffffff;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            background-color: rgba(10, 31, 51, 0.8);
+        }
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+        }
+
+        /* ---------- main container (2-column layout) ---------- */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* LEFT SIDE: Primary Actions Panel (cards grid) */
+        .primary-panel {
+            flex: 2;
+            min-width: 280px;
+        }
+
+        .cards-grid {
+            display: grid;
+           grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* card styling: #1e293b background, soft shadow, rounded corners */
+        .skill-card {
+            background: #1e293b;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            transition: all 0.25s ease;
+            border: 1px solid #334155;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.5);
+            border-color: rgba(245, 158, 11, 0.4);
+            background: #2d3a4e;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(245, 158, 11, 0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #f59e0b;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+        }
+
+        .card-description {
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-top: 8px;
+            padding-left: 4px;
+            
+        }
+
+        .card-stats {
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            border-top: 1px solid #334155;
+            padding-top: 10px;
+        }
+        a {
+    text-decoration: none;
+    color: inherit;
+      }
+
+    .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+     }
+
+        /* RIGHT SIDE: Progress & Engagement Panel */
+        .progress-panel {
+            flex: 1.2;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        /* streak card */
+        .streak-card {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #334155;
+            text-align: center;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .streak-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .streak-header i {
+            font-size: 2rem;
+            color: #f59e0b;
+        }
+
+        .streak-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        .streak-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #f59e0b;
+            line-height: 1;
+            margin: 0.5rem 0;
+        }
+
+        .streak-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .streak-btn {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #fbbf24;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            font-size: 0.85rem;
+        }
+
+        .streak-btn:hover {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+
+        /* Daily Drills section */
+        .daily-card {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #334155;
+        }
+
+        .daily-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 0.8rem;
+        }
+
+        .daily-header i {
+            font-size: 1.5rem;
+            color: #f59e0b;
+        }
+
+        .daily-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .daily-question {
+            background: #0f172a;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid #f59e0b;
+            transition: 0.1s;
+        }
+
+        .daily-question p {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .question-tag {
+            background: #334155;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        .solve-link {
+            color: #f59e0b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .solve-link:hover {
+            color: #fbbf24;
+        }
+
+        .refresh-hint {
+            text-align: right;
+            font-size: 0.65rem;
+            color: #64748b;
+            margin-top: 0.8rem;
+        }
+
+        /* Recent activity section */
+        .activity-card {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #334155;
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 0.8rem;
+        }
+
+        .activity-header i {
+            font-size: 1.3rem;
+            color: #f59e0b;
+        }
+
+        .activity-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f59e0b;
+        }
+
+        .activity-detail {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .activity-time {
+            font-size: 0.65rem;
+            color: #94a3b8;
+        }
+
+        /* footer */
+        .footer {
+            background-color: #0a1f33;
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #1f3e5c;
+            color: #cbd5e1;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #f59e0b;
+        }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .nav-menu { gap: 1rem; }
+            .dashboard-container { padding: 0 1.2rem; flex-direction: column; }
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 700px) {
+            .nav-menu { order: 3; width: 100%; margin-top: 1rem; justify-content: center; }
+            .profile-btn { margin-left: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar: exactly as provided (Home, About Us, Aptitude, Logical Reasoning, Verbal, Resume Builder, Mock Tests, Certificates, Dashboard) -->
+    <nav class="navbar">
+        <div class="logo">
+            <span>Placement</span><span>Prep</span>
+        </div>
+        <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+    </nav>
+
+    <!-- Main 2-Column Layout -->
+    <div class="dashboard-container">
+        <!-- LEFT SIDE: Primary Actions Panel (8 core cards) -->
+        <div class="primary-panel">
+            <div class="cards-grid">
+                <!-- Aptitude -->
+                 <a href="apptitude.html" class="card-link">
+                <div class="skill-card" data-category="Aptitude">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                        <h3>Aptitude</h3>
+                    </div>
+                    <div class="card-description">Quantitative Aptitude, Data Interpretation, Number Series, Percentages, Ratios & Profit/Loss.</div>
+                    <div class="card-stats"><i class="fas fa-chart-line"></i> 120+ practice sets</div>
+                </div>
+                </a>
+                <!-- Logical Reasoning -->
+                 <a href="logicalreasoning.html" class="card-link">
+                <div class="skill-card" data-category="Logical Reasoning">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Logical Reasoning</h3>
+                    </div>
+                    <div class="card-description">Puzzles, Syllogisms, Blood Relations, Coding-Decoding, Seating Arrangements, Series.</div>
+                    <div class="card-stats"><i class="fas fa-puzzle-piece"></i> 85+ reasoning sets</div>
+                </div>
+                </a>
+                <!-- Technical MCQ -->
+                 <a href="technical.html" class="card-link">
+                <div class="skill-card" data-category="Technical MCQ">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-microchip"></i></div>
+                        <h3>Technical MCQ</h3>
+                    </div>
+                    <div class="card-description">C, C++, Java, Python, OS, DBMS, Computer Networks, OOPs, DSA fundamentals.</div>
+                    <div class="card-stats"><i class="fas fa-code"></i> 500+ MCQs</div>
+                </div>
+                </a>
+                <!-- Verbal Ability -->
+                  <a href="verbal.html" class="card-link">
+                <div class="skill-card" data-category="Verbal Ability">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-language"></i></div>
+                        <h3>Verbal Ability</h3>
+                    </div>
+                    <div class="card-description">Grammar, Vocabulary, Reading Comprehension, Para Jumbles, Sentence Correction.</div>
+                    <div class="card-stats"><i class="fas fa-book-open"></i> 200+ exercises</div>
+                </div>
+                </a>
+                <!-- Coding Practice -->
+                  <a href="programming.html" class="card-link">
+                <div class="skill-card" data-category="Coding Practice">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h3>Coding Practice</h3>
+                    </div>
+                    <div class="card-description">Data Structures, Algorithms, Dynamic Programming, Strings, Arrays, Trees, Graphs.</div>
+                    <div class="card-stats"><i class="fas fa-terminal"></i> 150+ coding problems</div>
+                </div>
+                </a>
+                <!-- Resume Builder -->
+                 
+                <!-- Interview Preparation -->
+                 <!-- Interview Preparation -->
+<a href="interview.html" class="card-link">
+    <div class="skill-card" data-category="Interview Preparation">
+        <div class="card-header">
+            <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+            <h3>Interview Preparation</h3>
+        </div>
+        <div class="card-description">
+            HR Questions, Technical Interviews, Mock Interviews.
+        </div>
+        <div class="card-stats">
+            <i class="fas fa-comments"></i> 100+ interview questions
+        </div>
+    </div>
+</a>
+                <!-- Company-wise Questions -->
+                  <a href="companywise.html" class="card-link">
+                <div class="skill-card" data-category="Company-wise Questions">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-building"></i></div>
+                        <h3>Company-wise Questions</h3>
+                    </div>
+                    <div class="card-description">FAANG, Microsoft, Google, TCS, Infosys, Wipro — previous year & pattern based.</div>
+                    <div class="card-stats"><i class="fas fa-chart-simple"></i> 30+ companies</div>
+                </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE: Progress & Engagement Panel -->
+        <div class="progress-panel">
+            <!-- Consistency Streak Tracker -->
+            <div class="streak-card">
+                <div class="streak-header">
+                    <i class="fas fa-fire"></i>
+                    <h3>Consistency Streak</h3>
+                </div>
+                <div class="streak-number" id="streakCount">0</div>
+                <div class="streak-label">days of focused preparation</div>
+                <button class="streak-btn" id="markStreakBtn">✔️ Mark Today's Practice</button>
+            </div>
+
+            <!-- Daily Challenges / Daily Drills -->
+            <div class="daily-card">
+                <div class="daily-header">
+                    <i class="fas fa-calendar-day"></i>
+                    <h3>Daily Drills</h3>
+                </div>
+                <div id="dailyQuestionsContainer">
+                    <!-- dynamic questions injected here -->
+                </div>
+                <div class="refresh-hint">
+                    <i class="fas fa-sync-alt"></i> New questions on every refresh
+                </div>
+            </div>
+
+            <!-- Recent Activity / Progress Summary -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <i class="fas fa-chart-simple"></i>
+                    <h3>Recent Activity</h3>
+                </div>
+                <div id="activityContainer">
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="activity-detail">
+                            <div class="activity-title">Completed Aptitude: Percentages</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="fas fa-code"></i></div>
+                        <div class="activity-detail">
+                            <div class="activity-title">Solved 5 Technical MCQs</div>
+                            <div class="activity-time">Yesterday</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon"><i class="fas fa-brain"></i></div>
+                        <div class="activity-detail">
+                            <div class="activity-title">Logical Reasoning: Syllogisms</div>
+                            <div class="activity-time">2 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-container">
+            <div class="footer-copy">© 2025 <strong>PlacementPrep</strong> · Complete Placement Portal</div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+                <a href="#">Help Center</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // -------------------- STREAK LOGIC (24h based) --------------------
+        let currentStreak = 0;
+        const STREAK_KEY = "placement_streak_value";
+        const LAST_DATE_KEY = "placement_last_streak_date";
+
+        function loadStreak() {
+            const saved = localStorage.getItem(STREAK_KEY);
+            const lastDate = localStorage.getItem(LAST_DATE_KEY);
+            if (saved !== null) {
+                currentStreak = parseInt(saved, 10);
+            } else {
+                currentStreak = 8; // demo starting streak
+                localStorage.setItem(STREAK_KEY, currentStreak);
+                localStorage.setItem(LAST_DATE_KEY, new Date().toDateString());
+            }
+            updateStreakUI();
+        }
+
+        function updateStreakUI() {
+            const streakSpan = document.getElementById("streakCount");
+            if (streakSpan) streakSpan.innerText = currentStreak;
+        }
+
+        function incrementStreak() {
+            const today = new Date().toDateString();
+            const lastDate = localStorage.getItem(LAST_DATE_KEY);
+            if (lastDate === today) {
+                alert("🔥 You've already marked today's practice! Come back tomorrow to extend your streak.");
+                return;
+            }
+            currentStreak++;
+            localStorage.setItem(STREAK_KEY, currentStreak);
+            localStorage.setItem(LAST_DATE_KEY, today);
+            updateStreakUI();
+            alert("✅ Amazing! Your streak increased. Stay consistent!");
+        }
+
+        // -------------------- DAILY QUESTIONS (refresh each load) --------------------
+        const questionBank = {
+            aptitude: [
+                { text: "A man invests ₹5000 at 8% simple interest. After how many years will it become ₹6600? (4 years)", tag: "Aptitude" },
+                { text: "The average of 8 numbers is 24. If each number is multiplied by 2, new average? (48)", tag: "Aptitude" },
+                { text: "A train 250m long crosses a platform 150m in 20 sec. Find speed? (72 km/h)", tag: "Aptitude" }
+            ],
+            logical: [
+                { text: "If 5+3=28, 9+1=810, then 8+6=? (214)", tag: "Logical Reasoning" },
+                { text: "Find the next in series: 3, 6, 11, 18, ? (27)", tag: "Logical Reasoning" },
+                { text: "In a certain code, 'PLACEMENT' is written as 'QMBDFNFOU'. How is 'PREP' written? (QS FQ)", tag: "Logical Reasoning" }
+            ],
+            tech: [
+                { text: "Time complexity of Binary Search in worst case? O(log n)", tag: "Technical MCQ" },
+                { text: "Which protocol is used for secure web browsing? HTTPS", tag: "Technical MCQ" },
+                { text: "What does SQL stand for? Structured Query Language", tag: "Technical MCQ" }
+            ],
+            verbal: [
+                { text: "Synonym of 'Ephemeral'? (Short-lived)", tag: "Verbal" },
+                { text: "Spot the error: Neither of the students have completed the assignment. (has)", tag: "Verbal" },
+                { text: "Antonym of 'Loquacious'? (Taciturn)", tag: "Verbal" }
+            ]
+        };
+
+        function getRandomDailyQuestions() {
+            const allQuestions = [
+                ...questionBank.aptitude,
+                ...questionBank.logical,
+                ...questionBank.tech,
+                ...questionBank.verbal
+            ];
+            // shuffle and pick 2 unique questions
+            const shuffled = [...allQuestions];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled.slice(0, 2);
+        }
+
+        function renderDailyQuestions() {
+            const container = document.getElementById("dailyQuestionsContainer");
+            if (!container) return;
+            const questions = getRandomDailyQuestions();
+            container.innerHTML = "";
+            questions.forEach((q, idx) => {
+                const qDiv = document.createElement("div");
+                qDiv.className = "daily-question";
+                qDiv.innerHTML = `
+                    <p>📌 ${q.text}</p>
+                    <div class="question-meta">
+                        <span class="question-tag">${q.tag}</span>
+                        <span class="solve-link" data-qtext="${q.text.replace(/'/g, "\\'")}">Attempt →</span>
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+            // attach solve events
+            document.querySelectorAll(".solve-link").forEach(link => {
+                link.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const questionText = link.getAttribute("data-qtext") || "Challenge";
+                    alert(`⚡ Daily Drill Activated!\n\n${questionText}\n\n💡 Review concept, then practice similar problems. Keep pushing!`);
+                });
+            });
+        }
+
+        
+
+        // Profile button interaction
+        document.getElementById("profileBtn")?.addEventListener("click", () => {
+            alert("👤 Profile Dashboard\n\nProgress: " + currentStreak + " day streak\nCompleted modules: 12+ \nKeep preparing!");
+        });
+
+       
+        // streak button event
+        document.getElementById("markStreakBtn")?.addEventListener("click", incrementStreak);
+
+        // Initialize everything
+        function init() {
+            loadStreak();
+            renderDailyQuestions();
+            attachCardInteractions();
+            // dynamic recent activity update based on streak
+            const activityDiv = document.getElementById("activityContainer");
+            if (activityDiv && currentStreak > 0) {
+                const streakMsg = document.createElement("div");
+                streakMsg.className = "activity-item";
+                streakMsg.style.borderTop = "1px solid #334155";
+                streakMsg.style.marginTop = "8px";
+                streakMsg.innerHTML = `
+                    <div class="activity-icon"><i class="fas fa-fire"></i></div>
+                    <div class="activity-detail">
+                        <div class="activity-title">🔥 ${currentStreak}-day active streak!</div>
+                        <div class="activity-time">Just now</div>
+                    </div>
+                `;
+                if (activityDiv.children.length < 4) activityDiv.appendChild(streakMsg);
+            }
+        }
+        init();
+    </script>
+</body>
+</html>

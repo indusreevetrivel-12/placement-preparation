@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Mock Test Platform | Placement Prep</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+        }
+
+        /* ---------- navbar (exactly as provided) ---------- */
+        .navbar {
+            background-color: #0a1f33;
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #1f3e5c;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span:first-child {
+            color: white;
+        }
+
+        .logo span:last-child {
+            color: #f5b942;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #f5b942;
+            transition: width 0.2s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            text-shadow: 0 0 6px #f2c46d;
+            color: #ffffff;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+              text-decoration: none;
+            background-color: rgba(10, 31, 51, 0.8);
+        }
+
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+            .nav-menu {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-menu {
+                order: 3;
+                width: 100%;
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            .profile-btn {
+                margin-left: auto;
+            }
+        }
+
+        /* main test container */
+        .test-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        /* timer & progress card */
+        .info-panel {
+            background: rgba(15, 25, 45, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            padding: 1rem 1.8rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid rgba(245, 185, 66, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .timer-box {
+            background: #0a1f33;
+            padding: 0.5rem 1.2rem;
+            border-radius: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            color: #f5b942;
+        }
+        .timer-box i { font-size: 1.3rem; color: #f5b942; }
+        .progress-indicator {
+            background: #0f172a;
+            padding: 0.4rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+        }
+        .reset-test {
+            background: #1e293b;
+            border: none;
+            color: #facc15;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .reset-test:hover { background: #f5b942; color: #0f172a; }
+
+        /* question card */
+        .question-card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+            transition: 0.2s;
+        }
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            line-height: 1.4;
+            color: #f1f5f9;
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .option {
+            background: #0f172a;
+            padding: 0.9rem 1.2rem;
+            border-radius: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            border: 1px solid #2d3a5e;
+            transition: all 0.15s;
+        }
+        .option:hover {
+            background: #1e2a47;
+            border-color: #f5b942;
+        }
+        .option input {
+            width: 20px;
+            height: 20px;
+            accent-color: #f5b942;
+            cursor: pointer;
+        }
+        .option label {
+            font-size: 1rem;
+            color: #e2e8f0;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        button {
+            background: #0f172a;
+            border: 1px solid #f5b942;
+            padding: 0.7rem 1.8rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        button i { color: #f5b942; }
+        button:hover {
+            background: #f5b942;
+            color: #0f172a;
+        }
+        button:hover i { color: #0f172a; }
+        .submit-btn {
+            background: #f5b942;
+            color: #0f172a;
+            border: none;
+        }
+        .submit-btn i { color: #0f172a; }
+        .submit-btn:hover { background: #ffda7c; transform: scale(1.02); }
+
+        /* result container */
+        .result-card {
+            background: rgba(15, 25, 45, 0.95);
+            border-radius: 2rem;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid #f5b942;
+        }
+        .score-circle {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #f5b942;
+            margin: 0.5rem 0;
+        }
+        .details-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .detail-item {
+            background: #0f172a;
+            padding: 0.7rem 1.8rem;
+            border-radius: 3rem;
+        }
+        .correct-answers-list {
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1rem;
+            background: #0a1122;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+        .answer-line {
+            border-bottom: 1px solid #2d3a5e;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .green { color: #4ade80; }
+        .red { color: #f87171; }
+        .new-test-btn {
+            background: #1e293b;
+            margin-top: 1rem;
+        }
+        .hide { display: none; }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar (exactly as requested) -->
+<nav class="navbar">
+    <div class="logo">
+        <span>Placement</span><span>Prep</span>
+    </div>
+
+   </div>
+        <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+</nav>
+
+<div class="test-container" id="testApp">
+    <div class="info-panel">
+        <div class="timer-box"><i class="fas fa-hourglass-half"></i> <span id="timerDisplay">50:00</span></div>
+        <div class="progress-indicator"><i class="fas fa-question-circle"></i> Question <span id="currentQNumber">1</span>/<span id="totalQuestions">25</span></div>
+        <button class="reset-test" id="forceResetBtn"><i class="fas fa-arrow-rotate-right"></i> New Test</button>
+    </div>
+
+    <!-- active test area -->
+    <div id="quizArea">
+        <div class="question-card" id="questionCard">
+            <div class="question-text" id="questionText">Loading...</div>
+            <div class="options-list" id="optionsContainer"></div>
+            <div class="nav-buttons">
+                <button id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+                <button id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+                <button id="submitTestBtn" class="submit-btn"><i class="fas fa-check-circle"></i> Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- result area -->
+    <div id="resultArea" class="result-card hide">
+        <i class="fas fa-chart-line" style="font-size: 2.5rem; color:#f5b942"></i>
+        <h2 style="margin: 0.5rem 0;">Test Results</h2>
+        <div class="score-circle" id="finalScoreDisplay">0 / 0</div>
+        <div class="details-grid">
+            <div class="detail-item"><i class="fas fa-check-circle green"></i> Correct: <span id="correctCount">0</span></div>
+            <div class="detail-item"><i class="fas fa-times-circle red"></i> Wrong: <span id="wrongCount">0</span></div>
+        </div>
+        <div style="font-weight: 500; margin: 0.5rem 0;">📋 Detailed Answers</div>
+        <div id="answersDetailList" class="correct-answers-list"></div>
+        <button id="restartMockBtn" class="new-test-btn"><i class="fas fa-sync-alt"></i> Start New Mock Test</button>
+    </div>
+</div>
+
+<script>
+    // ---------------------------- QUESTION POOL (25 items) ---------------------------------
+    const MASTER_QUESTIONS = [
+        { text: "A train crosses a platform of length 240m in 18 seconds and crosses a man running at 6 km/h in the opposite direction in 9 seconds. Find the speed of the train.", options: ["54 km/h", "72 km/h", "81 km/h", "90 km/h"], correct: "72 km/h" },
+        { text: "If x + 1/x = 5, find x³ + 1/x³.", options: ["35", "110", "115", "125"], correct: "110" },
+        { text: "A sum invested at compound interest doubles itself in 5 years. In how many years will it become 8 times?", options: ["10", "12", "15", "20"], correct: "15" },
+        { text: "A shopkeeper marks an item 40% above cost price and gives successive discounts of 10% and 20%. Find profit/loss percentage.", options: ["0.8% profit", "0.8% loss", "1.2% profit", "2% loss"], correct: "0.8% profit" },
+        { text: "A pipe fills a tank in 12 hours while another empties it in 18 hours. If both are opened together, how much time will the tank take to fill?", options: ["24 hours", "30 hours", "36 hours", "40 hours"], correct: "36 hours" },
+        { text: "If CAT = 24, DOG = 26, then TIGER = ?", options: ["71", "72", "73", "74"], correct: "73" },
+        { text: "Statement: 'All roses are flowers. Some flowers fade quickly.' Conclusions: I. Some roses fade quickly. II. Some flowers are roses.", options: ["Only 1 follows", "Only 2 follows", "Both follow", "Neither follows"], correct: "Only 2 follows" },
+        { text: "Find the missing number: 3, 8, 15, 24, 35, ?", options: ["46", "47", "48", "49"], correct: "48" },
+        { text: "A man walks 10m north, turns right, walks 15m, turns left, walks 5m, turns left again and walks 15m. How far is he from the starting point?", options: ["5m", "10m", "15m", "20m"], correct: "5m" },
+        { text: "If 'PAPER' is coded as 'QBQFS', how is 'BOARD' coded?", options: ["CPBSE", "CPASE", "CQPSE", "CQBSE"], correct: "CPBSE" },
+        { text: "Choose the correct synonym of 'Ubiquitous'.", options: ["Rare", "Omnipresent", "Fragile", "Ancient"], correct: "Omnipresent" },
+        { text: "Identify the grammatically correct sentence.", options: ["Neither of the boys have completed their assignment.", "Neither of the boys has completed his assignment.", "Neither of the boys have completed his assignment.", "Neither boys has completed their assignment."], correct: "Neither of the boys has completed his assignment." },
+        { text: "Choose the correct passive voice: 'They are watching the movie.'", options: ["The movie watched by them.", "The movie is being watched by them.", "The movie was watched by them.", "The movie has been watched by them."], correct: "The movie is being watched by them." },
+        { text: "Fill in the blank: Had I known about the meeting, I _____ attended it.", options: ["would have", "will have", "would", "shall have"], correct: "would have" },
+        { text: "Find the antonym of 'Magnanimous'.", options: ["Generous", "Noble", "Selfish", "Humble"], correct: "Selfish" },
+        { text: "What is the worst-case time complexity of Quick Sort?", options: ["O(n log n)", "O(log n)", "O(n²)", "O(n)"], correct: "O(n²)" },
+        { text: "Which data structure is used for recursion internally?", options: ["Queue", "Stack", "Linked List", "Heap"], correct: "Stack" },
+        { text: "Which traversal of BST gives sorted output?", options: ["Preorder", "Postorder", "Inorder", "Level Order"], correct: "Inorder" },
+        { text: "What is the output? a = [1,2,3]; print(a*2)", options: ["[2,4,6]", "[1,2,3,1,2,3]", "Error", "None"], correct: "[1,2,3,1,2,3]" },
+        { text: "Which of the following is NOT an OOP principle?", options: ["Encapsulation", "Inheritance", "Compilation", "Polymorphism"], correct: "Compilation" },
+        { text: "Which normal form removes transitive dependency?", options: ["1NF", "2NF", "3NF", "BCNF"], correct: "3NF" },
+        { text: "A deadlock occurs when:", options: ["CPU is overloaded", "Processes wait indefinitely for resources", "RAM becomes full", "Cache memory fails"], correct: "Processes wait indefinitely for resources" },
+        { text: "Which protocol is used for secure communication over the web?", options: ["HTTP", "FTP", "HTTPS", "SMTP"], correct: "HTTPS" },
+        { text: "Which scheduling algorithm may cause starvation?", options: ["Round Robin", "FCFS", "Priority Scheduling", "FIFO"], correct: "Priority Scheduling" },
+        { text: "In networking, what does DNS stand for?", options: ["Dynamic Naming System", "Domain Name System", "Data Network Service", "Domain Network Security"], correct: "Domain Name System" }
+    ];
+    const TOTAL_QS = 25;
+
+    // Fisher-Yates shuffle
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    // State keys
+    const STORAGE_ORDER_KEY = "mockTest_shuffledOrder";
+    const STORAGE_ANSWERS_KEY = "mockTest_userAnswers";
+    const STORAGE_TIMESTAMP_KEY = "mockTest_timerRemaining";
+    const STORAGE_EXPIRY_KEY = "mockTest_timerEnd";
+
+    let shuffledQuestions = [];
+    let userAnswers = new Array(TOTAL_QS).fill(null);
+    let currentIndex = 0;
+    let timerInterval = null;
+    let timeRemainingSec = 50 * 60;
+    let testSubmitted = false;
+
+    // DOM elements
+    const quizArea = document.getElementById('quizArea');
+    const resultArea = document.getElementById('resultArea');
+    const timerDisplaySpan = document.getElementById('timerDisplay');
+    const currentQNumberSpan = document.getElementById('currentQNumber');
+    const totalQSpan = document.getElementById('totalQuestions');
+    const questionTextDiv = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitTestBtn');
+    const forceResetBtn = document.getElementById('forceResetBtn');
+    const restartMockBtn = document.getElementById('restartMockBtn');
+
+    function formatTime(sec) {
+        let mins = Math.floor(sec / 60);
+        let remainSec = sec % 60;
+        return `${mins.toString().padStart(2,'0')}:${remainSec.toString().padStart(2,'0')}`;
+    }
+
+    function persistState() {
+        if (testSubmitted) return;
+        localStorage.setItem(STORAGE_ANSWERS_KEY, JSON.stringify(userAnswers));
+        localStorage.setItem(STORAGE_TIMESTAMP_KEY, timeRemainingSec.toString());
+        localStorage.setItem(STORAGE_EXPIRY_KEY, Date.now().toString());
+    }
+
+    function loadPersistedState() {
+        const savedAnswers = localStorage.getItem(STORAGE_ANSWERS_KEY);
+        if (savedAnswers) {
+            try {
+                const parsed = JSON.parse(savedAnswers);
+                if (Array.isArray(parsed) && parsed.length === TOTAL_QS) userAnswers = parsed;
+            } catch(e) {}
+        }
+        const savedTime = localStorage.getItem(STORAGE_TIMESTAMP_KEY);
+        const savedTimestamp = localStorage.getItem(STORAGE_EXPIRY_KEY);
+        if (savedTime && savedTimestamp) {
+            const elapsed = Math.floor((Date.now() - parseInt(savedTimestamp)) / 1000);
+            let remaining = parseInt(savedTime) - elapsed;
+            if (remaining > 0 && remaining <= 50*60) timeRemainingSec = remaining;
+            else if (remaining <= 0) timeRemainingSec = 0;
+        }
+    }
+
+    function initShuffledOrder() {
+        let storedOrder = localStorage.getItem(STORAGE_ORDER_KEY);
+        if (storedOrder) {
+            try {
+                const indices = JSON.parse(storedOrder);
+                if (Array.isArray(indices) && indices.length === TOTAL_QS) {
+                    shuffledQuestions = indices.map(i => MASTER_QUESTIONS[i]);
+                    return;
+                }
+            } catch(e) {}
+        }
+        let indices = [...Array(TOTAL_QS).keys()];
+        shuffleArray(indices);
+        localStorage.setItem(STORAGE_ORDER_KEY, JSON.stringify(indices));
+        shuffledQuestions = indices.map(i => MASTER_QUESTIONS[i]);
+    }
+
+    function renderCurrentQuestion() {
+        if (testSubmitted) return;
+        const q = shuffledQuestions[currentIndex];
+        if (!q) return;
+        questionTextDiv.innerText = `${currentIndex+1}. ${q.text}`;
+        optionsContainer.innerHTML = '';
+        q.options.forEach(opt => {
+            const isChecked = (userAnswers[currentIndex] === opt);
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option';
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'questionOption';
+            radio.value = opt;
+            radio.checked = isChecked;
+            radio.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    userAnswers[currentIndex] = opt;
+                    persistState();
+                }
+            });
+            const label = document.createElement('label');
+            label.innerText = opt;
+            optionDiv.appendChild(radio);
+            optionDiv.appendChild(label);
+            optionsContainer.appendChild(optionDiv);
+        });
+        currentQNumberSpan.innerText = currentIndex+1;
+        totalQSpan.innerText = TOTAL_QS;
+        prevBtn.disabled = (currentIndex === 0);
+    }
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (testSubmitted) return;
+            if (timeRemainingSec <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                if (!testSubmitted) submitTest();
+            } else {
+                timeRemainingSec--;
+                timerDisplaySpan.innerText = formatTime(timeRemainingSec);
+                persistState();
+                if (timeRemainingSec === 0) {
+                    clearInterval(timerInterval);
+                    if (!testSubmitted) submitTest();
+                }
+            }
+        }, 1000);
+    }
+
+    function calculateScore() {
+        let correct = 0;
+        let wrong = 0;
+        const detailed = [];
+        for (let i = 0; i < TOTAL_QS; i++) {
+            const selected = userAnswers[i];
+            const correctAns = shuffledQuestions[i].correct;
+            const isCorrect = (selected === correctAns);
+            if (isCorrect) correct++;
+            else wrong++;
+            detailed.push({
+                question: shuffledQuestions[i].text,
+                selected: selected || "Not answered",
+                correct: correctAns,
+                isCorrect
+            });
+        }
+        return { correct, wrong, total: TOTAL_QS, detailed };
+    }
+
+    function showResult() {
+        const scoreData = calculateScore();
+        document.getElementById('finalScoreDisplay').innerHTML = `${scoreData.correct} / ${scoreData.total}`;
+        document.getElementById('correctCount').innerText = scoreData.correct;
+        document.getElementById('wrongCount').innerText = scoreData.wrong;
+        const detailContainer = document.getElementById('answersDetailList');
+        detailContainer.innerHTML = '';
+        scoreData.detailed.forEach((item, idx) => {
+            const div = document.createElement('div');
+            div.className = 'answer-line';
+            div.innerHTML = `<strong>Q${idx+1}:</strong> ${item.question.substring(0, 100)}...<br>
+                             <span class="${item.isCorrect ? 'green' : 'red'}">Your: ${item.selected}</span> &nbsp;| 
+                             <span class="green">Correct: ${item.correct}</span>`;
+            detailContainer.appendChild(div);
+        });
+        quizArea.classList.add('hide');
+        resultArea.classList.remove('hide');
+        testSubmitted = true;
+        if (timerInterval) clearInterval(timerInterval);
+        localStorage.removeItem(STORAGE_ANSWERS_KEY);
+        localStorage.removeItem(STORAGE_TIMESTAMP_KEY);
+        localStorage.removeItem(STORAGE_EXPIRY_KEY);
+    }
+
+    function submitTest() {
+        if (testSubmitted) return;
+        testSubmitted = true;
+        if (timerInterval) clearInterval(timerInterval);
+        showResult();
+    }
+
+    function resetAndNewTest() {
+        localStorage.removeItem(STORAGE_ANSWERS_KEY);
+        localStorage.removeItem(STORAGE_TIMESTAMP_KEY);
+        localStorage.removeItem(STORAGE_EXPIRY_KEY);
+        localStorage.removeItem(STORAGE_ORDER_KEY);
+        initShuffledOrder();
+        userAnswers = new Array(TOTAL_QS).fill(null);
+        currentIndex = 0;
+        testSubmitted = false;
+        timeRemainingSec = 50 * 60;
+        timerDisplaySpan.innerText = formatTime(timeRemainingSec);
+        if (timerInterval) clearInterval(timerInterval);
+        startTimer();
+        persistState();
+        quizArea.classList.remove('hide');
+        resultArea.classList.add('hide');
+        renderCurrentQuestion();
+    }
+
+    function resumeSession() {
+        initShuffledOrder();
+        loadPersistedState();
+        if (timeRemainingSec <= 0) {
+            timeRemainingSec = 0;
+            submitTest();
+            return;
+        }
+        testSubmitted = false;
+        currentIndex = 0;
+        startTimer();
+        renderCurrentQuestion();
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+        if (testSubmitted) return;
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderCurrentQuestion();
+        }
+    });
+    nextBtn.addEventListener('click', () => {
+        if (testSubmitted) return;
+        if (currentIndex < TOTAL_QS - 1) {
+            currentIndex++;
+            renderCurrentQuestion();
+        } else {
+            if (confirm("You are at the last question. Do you want to submit the test?")) {
+                submitTest();
+            }
+        }
+    });
+    submitBtn.addEventListener('click', () => {
+        if (testSubmitted) return;
+        if (confirm("Are you sure you want to submit the test?")) submitTest();
+    });
+    forceResetBtn.addEventListener('click', () => {
+        if (confirm("Start a brand new test? All current progress will be lost.")) {
+            resetAndNewTest();
+        }
+    });
+    if (restartMockBtn) {
+        restartMockBtn.addEventListener('click', () => {
+            resetAndNewTest();
+        });
+    }
+
+    function init() {
+        totalQSpan.innerText = TOTAL_QS;
+        const storedOrder = localStorage.getItem(STORAGE_ORDER_KEY);
+        const storedAns = localStorage.getItem(STORAGE_ANSWERS_KEY);
+        if (storedOrder && storedAns) {
+            resumeSession();
+        } else {
+            resetAndNewTest();
+        }
+    }
+
+    init();
+
+    // Navigation interactions (as requested in the navbar script)
+   
+    
+
+   // Navigation works normally
+const navLinks = document.querySelectorAll(".nav-menu a");
+
+navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        console.log("Opening:", link.getAttribute("href"));
+    });
+});
+</script>
+</body>
+</html>

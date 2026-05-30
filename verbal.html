@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verbal Master | English Aptitude</title>
+
+<!-- Font Awesome & Google Fonts (Inter) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+
+<style>
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1f33 0%, #0f2c46 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* ---------- glass & utility ---------- */
+        .glass-card {
+            background: rgba(31, 58, 86, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* ---------- sticky navbar (exactly as provided in new spec) ---------- */
+        .navbar {
+            background-color: #0a1f33;
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #1f3e5c;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span:first-child {
+            color: white;
+        }
+        .logo span:last-child {
+            color: #f5b942;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #f5b942;
+            transition: width 0.2s ease;
+        }
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        .nav-menu a:hover {
+            text-shadow: 0 0 6px #f2c46d;
+            color: #ffffff;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: default;
+            background-color: rgba(10, 31, 51, 0.8);
+            text-decoration: none;
+        }
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+             text-decoration: none;
+        }
+
+        /* ---------- hero heading (modern, clean) same as original ---------- */
+        .hero-section {
+            text-align: center;
+            margin: 2.5rem 0 1rem 0;
+            padding: 0 1rem;
+        }
+        .hero-section h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #f5b942);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .hero-section p {
+            color: #cbdbe6;
+            margin-top: 0.5rem;
+            font-size: 1.05rem;
+        }
+        .gold-divider {
+            width: 100px;
+            height: 3px;
+            background: #f5b942;
+            margin: 0.8rem auto 1.8rem auto;
+            border-radius: 4px;
+            box-shadow: 0 0 8px #f5b942aa;
+        }
+
+        /* ---------- RESPONSIVE CARDS GRID (same as original) ---------- */
+        .cards-grid {
+            max-width: 1400px;
+            margin: 0 auto 4rem auto;
+            padding: 1.5rem 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem 1.8rem;
+        }
+
+        /* ----- CARD STYLES: original design (topic-card) unchanged ----- */
+        .topic-card {
+            background: rgba(25, 55, 80, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 1.6rem 1rem;
+            text-align: center;
+            box-shadow: 0 18px 32px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(28px);
+            animation: fadeSlideUp 0.55s forwards ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+        }
+
+        /* staggered fade-in for smooth loading */
+        .topic-card:nth-child(1) { animation-delay: 0.02s; }
+        .topic-card:nth-child(2) { animation-delay: 0.05s; }
+        .topic-card:nth-child(3) { animation-delay: 0.08s; }
+        .topic-card:nth-child(4) { animation-delay: 0.11s; }
+        .topic-card:nth-child(5) { animation-delay: 0.14s; }
+        .topic-card:nth-child(6) { animation-delay: 0.17s; }
+        .topic-card:nth-child(7) { animation-delay: 0.20s; }
+        .topic-card:nth-child(8) { animation-delay: 0.23s; }
+        .topic-card:nth-child(9) { animation-delay: 0.26s; }
+        .topic-card:nth-child(10) { animation-delay: 0.29s; }
+        .topic-card:nth-child(11) { animation-delay: 0.32s; }
+        .topic-card:nth-child(12) { animation-delay: 0.35s; }
+        .topic-card:nth-child(13) { animation-delay: 0.38s; }
+        .topic-card:nth-child(14) { animation-delay: 0.41s; }
+        .topic-card:nth-child(15) { animation-delay: 0.44s; }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* card hover effect (original) */
+        .topic-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            background: rgba(42, 78, 110, 0.8);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 32px 48px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(245, 185, 66, 0.3), 0 0 28px rgba(245, 185, 66, 0.25);
+            border-color: rgba(245, 185, 66, 0.45);
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            color: #f5b942;
+            margin-bottom: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+        .topic-card:hover .card-icon {
+            transform: scale(1.05);
+        }
+        .topic-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+        .topic-badge {
+            font-size: 0.68rem;
+            background: rgba(245, 185, 66, 0.18);
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            display: inline-block;
+            margin-top: 8px;
+            color: #f5cd8a;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* footer styles (exactly matching given structure from the new navigation snippet) */
+        .footer {
+            background-color: #0a1f33;
+            padding: 1.8rem 2.5rem;
+            margin-top: auto;
+            border-top: 1px solid #1f3e5c;
+            color: #cbd5e1;
+        }
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-copy {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+        .footer-copy strong {
+            color: white;
+            font-weight: 600;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .footer-links a:hover {
+            color: #f5b942;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .social-icons a {
+            color: #cbd5e1;
+            transition: 0.2s;
+        }
+        .social-icons a:hover {
+            color: #f5b942;
+            transform: translateY(-3px);
+        }
+
+        /* responsive adjustments (original + footer consistency) */
+        @media (max-width: 900px) {
+            .navbar { padding: 0.8rem 1.5rem; }
+            .nav-menu { gap: 1rem; }
+            .hero-section h1 { font-size: 2.2rem; }
+            .cards-grid { padding: 1rem 1.5rem; gap: 1.5rem; }
+        }
+        @media (max-width: 700px) {
+            .nav-menu { order: 3; width: 100%; margin-top: 0.8rem; justify-content: center; }
+            .profile-btn { margin-left: auto; }
+            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.2rem; }
+            .topic-title { font-size: 1rem; }
+            .footer-container { flex-direction: column; gap: 1rem; text-align: center; }
+            .footer-links { justify-content: center; }
+            .social-icons { justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .cards-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); padding: 0.8rem; }
+            .topic-card { padding: 1.2rem 0.6rem; min-height: 130px; }
+            .card-icon { font-size: 1.8rem; }
+        }
+    
+</style>
+</head>
+<body>
+
+<!-- NEW NAVIGATION BAR (exactly as provided, with Home, About Us, Aptitude, Mock Tests, Technical MCQ, Company-wise + Profile) -->
+<nav class="navbar">
+    <div class="logo">
+        <span>Placement</span><span>Prep</span>
+    </div>
+      <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+</nav>
+
+<!-- Hero section (unchanged from original Verbal Master layout) -->
+<div class="hero-section">
+    <h1>📖 Verbal Ability</h1>
+    <div class="gold-divider"></div>
+    <p>Master English grammar, vocabulary & comprehension</p>
+</div>
+
+<!-- Verbal topics grid (dynamic cards, exactly as original) -->
+<div class="cards-grid" id="verbalGrid"></div>
+
+<!-- FOOTER (exactly as provided in the second specification, matches new navbar style) -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-copy">
+            © 2025 <strong>PlacementPrep</strong> — All rights reserved
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Verbal topics array (exactly same as original)
+const verbalTopics = [
+    "Reading Comprehension",
+    "Error Spotting",
+    "Sentence Correction",
+    "Fill in the Blanks",
+    "Para Jumbles",
+    "Synonyms & Antonyms",
+    "Idioms & Phrases",
+    "Active & Passive",
+    "Direct & Indirect",
+    "Subject Verb",
+    "Articles & Prepositions",
+    "Tenses"
+];
+
+// Topic links mapping (unchanged from original)
+const topicLinks = {
+    "Reading Comprehension": "readingcomprehension.html",
+    "Error Spotting": "errorspotting.html",
+    "Sentence Correction": "sentencecorrection.html",
+    "Fill in the Blanks": "fillintheblanks.html",
+    "Para Jumbles": "parajumbles.html",
+    "Synonyms & Antonyms": "synonymsantonyms.html",
+    "Idioms & Phrases": "idiomsphrases.html",
+    "Active & Passive": "activepassive.html",
+    "Direct & Indirect": "directindirect.html",
+    "Subject Verb": "subjectverb.html",
+    "Articles & Prepositions": "articlesprepositions.html",
+    "Tenses": "tenses.html"
+};
+
+// Icon mapping (original logic)
+function getTopicIcon(topic) {
+    const lower = topic.toLowerCase();
+
+    if (lower.includes("reading")) return "fa-book-open";
+    if (lower.includes("error")) return "fa-exclamation-circle";
+    if (lower.includes("sentence")) return "fa-pen";
+    if (lower.includes("fill")) return "fa-edit";
+    if (lower.includes("para")) return "fa-random";
+    if (lower.includes("synonyms")) return "fa-language";
+    if (lower.includes("idioms")) return "fa-comments";
+    if (lower.includes("active")) return "fa-exchange-alt";
+    if (lower.includes("direct")) return "fa-quote-right";
+    if (lower.includes("subject")) return "fa-check-circle";
+    if (lower.includes("articles")) return "fa-layer-group";
+    if (lower.includes("tenses")) return "fa-clock";
+
+    return "fa-book";
+}
+
+// Build cards exactly like original Verbal page
+const gridContainer = document.getElementById("verbalGrid");
+
+verbalTopics.forEach(topic => {
+    const card = document.createElement("div");
+    card.className = "topic-card";
+
+    const iconClass = getTopicIcon(topic);
+    
+    card.innerHTML = `
+        <div class="card-icon">
+            <i class="fas ${iconClass}"></i>
+        </div>
+        <div class="topic-title">${topic}</div>
+        <div class="topic-badge">Quick Practice</div>
+    `;
+
+    // On click, navigate to respective topic page (same as original)
+    card.onclick = () => {
+        const targetUrl = topicLinks[topic];
+        if (targetUrl) {
+            window.location.href = targetUrl;
+        } else {
+            // fallback if any topic missing (just to be safe)
+            console.warn(`No link defined for ${topic}`);
+        }
+    };
+
+    gridContainer.appendChild(card);
+});
+</script>
+
+</body>
+</html>

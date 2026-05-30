@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>QuizCraft | LCM & HCF Mastery</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><span>Placement</span><span>Prep</span></div>
+     <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+</nav>
+
+<div class="app-wrapper">
+    <!-- Sidebar navigation -->
+     <aside class="quiz-sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-layer-group"></i> Aptitude Topics</h3>
+        </div>
+        <ul class="topic-list">
+            <a href="numbersystem.html" class="topic-item"><i class="fas fa-calculator"></i> Number System</a>
+            <a href="hcfandlcm.html" class="topic-item"><i class="fas fa-divide"></i> HCF & LCM</a>
+            <a href="divisibility.html" class="topic-item"><i class="fas fa-check-double"></i> Divisibility Rules</a>
+            <a href="simplification.html" class="topic-item"><i class="fas fa-chart-line"></i> Simplification & Approximation</a>
+            <a href="surdsindices.html" class="topic-item"><i class="fas fa-square-root-variable"></i> Surds & Indices</a>
+            <a href="squarescubes.html" class="topic-item"><i class="fas fa-cube"></i> Squares, Cubes & Roots</a>
+            <a href="fractionsdecimals.html" class="topic-item"><i class="fas fa-fraction"></i> Fractions & Decimals</a>
+            <a href="ratioproportion.html" class="topic-item"><i class="fas fa-chart-simple"></i> Ratio & Proportion</a>
+            <a href="percentage.html" class="topic-item"><i class="fas fa-percent"></i> Percentage</a>
+            <a href="profitloss.html" class="topic-item"><i class="fas fa-chart-line"></i> Profit & Loss</a>
+            <a href="simpleinterest.html" class="topic-item"><i class="fas fa-coins"></i> Simple Interest</a>
+            <a href="compoundinterest.html" class="topic-item"><i class="fas fa-chart-line"></i> Compound Interest</a>
+            <a href="average.html" class="topic-item"><i class="fas fa-chart-bar"></i> Average</a>
+            <a href="timedistance.html" class="topic-item"><i class="fas fa-road"></i> Time & Distance</a>
+            <a href="trainproblems.html" class="topic-item"><i class="fas fa-train"></i> Problems on Trains</a>
+            <a href="boatsstreams.html" class="topic-item"><i class="fas fa-water"></i> Boats & Streams</a>
+            <a href="timework.html" class="topic-item"><i class="fas fa-clock"></i> Time & Work</a>
+            <a href="pipescisterns.html" class="topic-item"><i class="fas fa-fill-drip"></i> Pipes & Cisterns</a>
+            <a href="partnership.html" class="topic-item"><i class="fas fa-handshake"></i> Partnership</a>
+            <a href="mixtures.html" class="topic-item"><i class="fas fa-flask"></i> Mixtures & Allegations</a>
+            <a href="problemsages.html" class="topic-item"><i class="fas fa-calendar-alt"></i> Problems on Ages</a>
+            <a href="mensuration2d.html" class="topic-item"><i class="fas fa-shapes"></i> Mensuration – 2D (Area)</a>
+            <a href="mensuration3d.html" class="topic-item"><i class="fas fa-cube"></i> Mensuration – 3D (Volume)</a>
+            <a href="algebra.html" class="topic-item"><i class="fas fa-square-root-variable"></i> Algebra (Equations)</a>
+            <a href="geometry.html" class="topic-item"><i class="fas fa-draw-polygon"></i> Geometry (Lines, Angles)</a>
+            <a href="coordinategeometry.html" class="topic-item"><i class="fas fa-chart-line"></i> Coordinate Geometry</a>
+            <a href="permutationcombination.html" class="topic-item"><i class="fas fa-shuffle"></i> Permutation & Combination</a>
+            <a href="probability.html" class="topic-item"><i class="fas fa-dice-d6"></i> Probability</a>
+            <a href="datainterpretation.html" class="topic-item"><i class="fas fa-chart-pie"></i> Data Interpretation</a>
+            <a href="quadraticequations.html" class="topic-item"><i class="fas fa-chart-line"></i> Quadratic Equations & Series</a>
+        </ul>
+    </aside>
+
+    <!-- Main Quiz Area -->
+    <main class="quiz-main-area">
+        <div class="quiz-card">
+            <div class="quiz-header">
+                <div class="progress-score">
+                    <div class="progress-indicator" id="progressIndicator"><i class="fas fa-question-circle"></i> Question 1 of 50</div>
+                    <div class="score-tracker"><i class="fas fa-star" style="color:#f5b942;"></i> Score: <span id="scoreValue">0</span></div>
+                </div>
+                <div class="timer-panel">
+                    <i class="fas fa-hourglass-half" style="color:#f5b942;"></i>
+                    <span class="timer-display" id="timerDisplay">00:00</span>
+                    <button class="timer-btn" id="startTimerBtn"><i class="fas fa-play"></i> Start</button>
+                    <button class="timer-btn" id="stopTimerBtn"><i class="fas fa-stop"></i> Stop</button>
+                </div>
+            </div>
+
+            <div class="question-title" id="questionTitle">Loading...</div>
+            <div class="options-grid" id="optionsContainer"></div>
+            <div class="result-message" id="resultMessage"><i class="fas fa-lightbulb"></i> Click any option to check answer</div>
+
+            <div class="explanation-section">
+                <button class="info-toggle" id="infoToggleBtn"><i class="fas fa-info-circle"></i> ℹ️ Explanation</button>
+                <div class="explanation-text" id="explanationText"></div>
+            </div>
+            <div class="next-btn-container">
+                <button class="next-btn" id="nextQuestionBtn"><i class="fas fa-arrow-right"></i> Next Question</button>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-copy">&copy; 2025 <strong>PlacementPrep</strong> — aptitude mastery</div>
+        <div class="footer-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Support</a></div>
+        <div class="social-icons"><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-github"></i></a></div>
+    </div>
+</footer>
+
+
+<script src="scritpt.js"></script>
+<script>
+    loadQuiz("hcfandlcm");
+</script>
+</body>
+</html>

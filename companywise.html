@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PlacementPrep | Company-wise Topics</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+
+body{
+background:linear-gradient(145deg,#0b1f33 0%,#0f2c46 100%);
+color:#fff;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+/* Navbar */
+.navbar{
+background:#0a1f33;
+padding:0.9rem 2.5rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+position:sticky;
+top:0;
+z-index:100;
+box-shadow:0 8px 20px rgba(0,0,0,.5);
+border-bottom:1px solid #1f3e5c;
+}
+
+.logo{
+font-size:1.8rem;
+font-weight:800;
+}
+
+.logo span:first-child{
+color:#fff;
+}
+
+.logo span:last-child{
+color:#f5b942;
+}
+
+.nav-menu{
+display:flex;
+gap:2rem;
+flex-wrap:wrap;
+}
+
+.nav-menu a{
+text-decoration:none;
+color:#fff;
+font-size:.95rem;
+position:relative;
+}
+
+.nav-menu a::after{
+content:'';
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:#f5b942;
+transition:.3s;
+}
+
+.nav-menu a:hover::after{
+width:100%;
+}
+
+ .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            background-color: rgba(10, 31, 51, 0.8);
+            text-decoration: none;
+        }
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+            text-decoration: none;
+        }
+/* Hero */
+.hero{
+text-align:center;
+padding:3rem 1rem 1rem;
+}
+
+.hero h1{
+font-size:3rem;
+font-weight:800;
+letter-spacing:1px;
+}
+
+.hero span{
+color:#f5b942;
+}
+
+.divider{
+width:140px;
+height:4px;
+background:#f5b942;
+margin:1rem auto;
+border-radius:10px;
+box-shadow:0 0 10px #f5b942;
+}
+
+.hero p{
+max-width:700px;
+margin:auto;
+opacity:.9;
+}
+
+/* Grid */
+.cards-grid{
+max-width:1400px;
+margin:auto;
+padding:2rem;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+gap:1.6rem;
+width:100%;
+}
+
+/* Cards */
+.prof-card{
+background:rgba(31,58,86,.45);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:28px;
+padding:1.8rem 1rem;
+text-align:center;
+box-shadow:0 18px 30px rgba(0,0,0,.4);
+cursor:pointer;
+transition:.35s;
+opacity:0;
+transform:translateY(30px);
+animation:fadeUp .6s forwards;
+}
+
+.prof-card:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:0 30px 45px rgba(0,0,0,.55),0 0 20px rgba(245,185,66,.22);
+border-color:rgba(245,185,66,.45);
+background:rgba(42,78,110,.72);
+}
+
+.prof-card:active{
+transform:scale(.98);
+}
+
+.company-icon{
+font-size:2rem;
+color:#f5b942;
+margin-bottom:.8rem;
+}
+
+.card-title{
+font-size:1.35rem;
+font-weight:800;
+margin-bottom:.5rem;
+}
+
+.card-badge{
+display:inline-block;
+padding:.25rem .9rem;
+border-radius:50px;
+font-size:.75rem;
+background:rgba(245,185,66,.18);
+color:#f5b942;
+margin-bottom:.7rem;
+}
+
+.card-desc{
+font-size:.88rem;
+opacity:.9;
+line-height:1.5;
+}
+
+@keyframes fadeUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* Footer */
+.footer{
+margin-top:auto;
+background:#0a1f33;
+padding:1.8rem 2rem;
+border-top:1px solid #1f3e5c;
+}
+
+.footer-container{
+max-width:1400px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:1rem;
+}
+
+.footer-links,
+.social-icons{
+display:flex;
+gap:1.3rem;
+}
+
+.footer a{
+color:#cbd5e1;
+text-decoration:none;
+}
+
+.footer a:hover{
+color:#f5b942;
+}
+
+.social-icons{
+font-size:1.2rem;
+}
+
+/* Mobile */
+@media(max-width:768px){
+.hero h1{
+font-size:2.2rem;
+}
+
+.nav-menu{
+width:100%;
+justify-content:center;
+margin-top:1rem;
+}
+
+.cards-grid{
+padding:1rem;
+grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+<div class="logo">
+<span>Placement</span><span>Prep</span>
+</div>
+
+ <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<h1>🎯 ACE DREAM <span>COMPANY TESTS</span></h1>
+<div class="divider"></div>
+<p>Choose your target company and practice previous placement-style aptitude questions, reasoning, verbal and coding rounds.</p>
+</section>
+
+<!-- Cards -->
+<div class="cards-grid" id="aptitudeGrid"></div>
+
+<!-- Footer -->
+<footer class="footer">
+<div class="footer-container">
+<div>© 2026 <strong>PlacementPrep</strong></div>
+
+<div class="footer-links">
+<a href="#">Privacy</a>
+<a href="#">Terms</a>
+<a href="#">Contact</a>
+</div>
+
+<div class="social-icons">
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+<a href="#"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</footer>
+
+<script>
+
+/* Full Working Redirect Version */
+
+const topicsList = [
+{ name:"TCS", file:"tcs.html" },
+{ name:"Infosys", file:"infosys.html" },
+{ name:"Wipro", file:"wipro.html" },
+{ name:"IBM", file:"ibm.html" },
+{ name:"Oracle", file:"oracle.html" },
+{ name:"Amazon", file:"amazon.html" },
+{ name:"Microsoft", file:"microsoft.html" },
+{ name:"Google", file:"google.html" }
+];
+
+const aptitudeHint = {
+"TCS":"Quant • Reasoning • Coding",
+"Infosys":"Puzzle • English • Aptitude",
+"Wipro":"Numerical • Essay • Coding",
+"IBM":"Logical • Algebra • Series",
+"Oracle":"Database • SQL • Logic",
+"Amazon":"Leadership • Aptitude",
+"Microsoft":"Algorithms • Puzzle",
+"Google":"Advanced Logic • Coding"
+};
+
+function getTopicIcon(name){
+
+name=name.toLowerCase();
+
+if(name.includes("tcs")) return "fa-chart-line";
+if(name.includes("infosys")) return "fa-lightbulb";
+if(name.includes("wipro")) return "fa-brain";
+if(name.includes("ibm")) return "fa-database";
+if(name.includes("oracle")) return "fa-server";
+if(name.includes("amazon")) return "fa-box";
+if(name.includes("microsoft")) return "fa-windows";
+if(name.includes("google")) return "fa-globe";
+
+return "fa-building";
+}
+
+function generateCards(){
+
+const grid=document.getElementById("aptitudeGrid");
+
+topicsList.forEach((topic,index)=>{
+
+const card=document.createElement("div");
+card.className="prof-card";
+card.style.animationDelay=`${index * 0.08}s`;
+
+const icon=getTopicIcon(topic.name);
+
+card.innerHTML=`
+<div class="company-icon">
+<i class="fas ${icon}"></i>
+</div>
+
+<div class="card-title">${topic.name}</div>
+
+<div class="card-badge">
+<i class="fas fa-star"></i> Placement Round
+</div>
+
+<div class="card-desc">
+${aptitudeHint[topic.name]}
+</div>
+`;
+
+/* REDIRECT FIX */
+card.addEventListener("click",()=>{
+window.location.href=topic.file;
+});
+
+grid.appendChild(card);
+
+});
+
+}
+
+generateCards();
+
+</script>
+
+</body>
+</html>

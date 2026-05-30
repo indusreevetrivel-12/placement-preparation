@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>JavaPrep | OOP & Core Java Concepts</title>
+
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1f33 0%, #0f2c46 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* ---------- glass & utility ---------- */
+        .glass-card {
+            background: rgba(31, 58, 86, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* ---------- sticky navbar (exactly as requested) ---------- */
+        .navbar {
+            background-color: #0a1f33;  /* solid dark navy */
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid #1f3e5c;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo span:first-child {
+            color: white;
+        }
+        .logo span:last-child {
+            color: #f5b942;   /* golden accent */
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            font-weight: 500;
+        }
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            position: relative;
+            padding: 0.3rem 0;
+        }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: #f5b942;
+            transition: width 0.2s ease;
+        }
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        .nav-menu a:hover {
+            text-shadow: 0 0 6px #f2c46d;
+            color: #ffffff;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 1.5px solid rgba(245, 185, 66, 0.5);
+            border-radius: 40px;
+            padding: 0.45rem 1.5rem 0.45rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+            background-color: rgba(10, 31, 51, 0.8);
+            text-decoration: none;
+        }
+        .profile-btn i {
+            color: #f5b942;
+            font-size: 1.1rem;
+        }
+        .profile-btn:hover {
+            border-color: #f5b942;
+            box-shadow: 0 0 15px #f5b94266;
+            background: #1f3a56;
+            transform: scale(1.02);
+            text-decoration: none;
+        }
+
+        /* ---------- main heading section ---------- */
+        .hero-section {
+            text-align: center;
+            margin: 3rem 0 1.5rem 0;
+        }
+        .hero-section h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: white;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+        .gold-divider {
+            width: 140px;
+            height: 4px;
+            background: #f5b942;
+            margin: 0.5rem auto 1.5rem auto;
+            border-radius: 4px;
+            box-shadow: 0 0 12px #f5b942;
+        }
+        .hero-sub {
+            color: #cbdbe6;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ---------- java cards grid (same original, enhanced styling) ---------- */
+        .cards-grid {
+            max-width: 1400px;
+            margin: 0 auto 4rem auto;
+            padding: 1.5rem 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 2rem 1.5rem;
+        }
+
+        /* Card style - homogeneous with original but upgraded glass & animation */
+        .java-card {
+            background: rgba(31, 58, 86, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 28px;
+            padding: 1.8rem 1.2rem 1.6rem 1.2rem;
+            box-shadow: 0 18px 30px -10px #00000080;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(40px) scale(0.97);
+            animation: cardFloatUp 0.6s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        /* staggered animation delays (8 topics) */
+        .java-card:nth-child(1) { animation-delay: 0.05s; }
+        .java-card:nth-child(2) { animation-delay: 0.15s; }
+        .java-card:nth-child(3) { animation-delay: 0.25s; }
+        .java-card:nth-child(4) { animation-delay: 0.35s; }
+        .java-card:nth-child(5) { animation-delay: 0.45s; }
+        .java-card:nth-child(6) { animation-delay: 0.55s; }
+        .java-card:nth-child(7) { animation-delay: 0.65s; }
+        .java-card:nth-child(8) { animation-delay: 0.75s; }
+
+        @keyframes cardFloatUp {
+            0% { opacity: 0; transform: translateY(40px) scale(0.97); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .java-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 45px -8px #000000cc, 0 0 0 2px rgba(245, 185, 66, 0.2), 0 0 30px 0 #f5b94233;
+            border-color: rgba(245, 185, 66, 0.4);
+            background: rgba(36, 65, 98, 0.6);
+            backdrop-filter: blur(12px);
+        }
+
+        .card-icon {
+            font-size: 2.8rem;
+            color: #f5b942;
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.6rem;
+            color: white;
+        }
+        .card-badge {
+            font-size: 0.8rem;
+            background: rgba(245, 185, 66, 0.15);
+            color: #f5cd8a;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        /* footer matching new theme */
+        .footer {
+            background-color: #0a1f33; /* same as navbar */
+            padding: 1.8rem 2.5rem;
+            margin-top: auto;
+            border-top: 1px solid #1f3e5c;
+            color: #cbd5e1;
+        }
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-copy {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+        .footer-copy strong {
+            color: white;
+            font-weight: 600;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .footer-links a:hover {
+            color: #f5b942;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .social-icons a {
+            color: #cbd5e1;
+            transition: 0.2s;
+        }
+        .social-icons a:hover {
+            color: #f5b942;
+            transform: translateY(-3px);
+        }
+
+        /* responsiveness tweaks */
+        @media (max-width: 900px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .nav-menu { gap: 1rem; }
+            .hero-section h1 { font-size: 2.5rem; }
+        }
+        @media (max-width: 700px) {
+            .nav-menu { order: 3; width: 100%; margin-top: 1rem; justify-content: center; }
+            .profile-btn { margin-left: auto; }
+            .cards-grid { padding: 1rem; gap: 1.2rem; }
+            .footer-container { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 
+    NEW NAVIGATION: exactly as requested, 
+    with smooth hover effects and PlacementPrep logo.
+    The structure and links are kept intentionally
+    (Home, About Us, Aptitude, Mock Tests, Technical MCQ, Company-wise).
+-->
+<nav class="navbar">
+    <div class="logo">
+        <span>Placement</span><span>Prep</span>
+    </div>
+  <div class="nav-menu">
+           <a href="home.html">Home</a>
+                <a href="aboutus.html">About Us</a>
+                <a href="apptitude.html">Aptitude</a>
+                <a href="mocktest.html">Mock Tests</a>
+                <a href="technical.html">Technical MCQ</a>
+                <a href="companywise.html">Company-wise</a>
+                <a href="interview.html">Interview preparations</a>
+        </div>
+       <a href="profile.html" class="profile-btn">
+    <i class="fas fa-user-circle"></i> Profile
+</a>
+</nav>
+
+<!-- Hero section (Core Java focus) -->
+<div class="hero-section">
+    <h1>⚡ Core Java Concepts</h1>
+    <div class="gold-divider"></div>
+    <p class="hero-sub">Master OOP, Collections, Exception Handling & more — essential for placements</p>
+</div>
+
+<!-- Dynamic Java Topics Grid -->
+<div class="cards-grid" id="javaGrid"></div>
+
+<!-- Footer (consistent with new design) -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-copy">© 2025 <strong>PlacementPrep</strong> — Java Mastery Series</div>
+        <div class="footer-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Support</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Core Java topics collection (preserving original mapping and file destinations)
+    const javaTopics = [
+        { name: "Data Types & Variables", file: "datatypes-variables.html" },
+        { name: "Control Statements (if, loops, switch)", file: "control-statements.html" },
+        { name: "OOP Concepts (Class, Object, Methods)", file: "oop-concepts.html" },
+        { name: "Inheritance & Polymorphism", file: "inheritance-polymorphism.html" },
+        { name: "Constructors & Method Overloading", file: "constructors-overloading.html" },
+        { name: "Collections Framework (List, Set, Map)", file: "collections-framework.html" },
+        { name: "Exception Handling", file: "exception-handling.html" },
+        { name: "Strings & StringBuilder", file: "strings-stringbuilder.html" }
+    ];
+
+    // Dynamic icon mapping based on topic name (original logic, kept stylish)
+    function getTopicIcon(name) {
+        const topicLower = name.toLowerCase();
+        if (topicLower.includes("data")) return "fa-code";
+        if (topicLower.includes("control")) return "fa-diagram-project";
+        if (topicLower.includes("oop")) return "fa-cubes";
+        if (topicLower.includes("inheritance")) return "fa-sitemap";
+        if (topicLower.includes("constructor")) return "fa-tools";
+        if (topicLower.includes("collections")) return "fa-layer-group";
+        if (topicLower.includes("exception")) return "fa-triangle-exclamation";
+        if (topicLower.includes("string")) return "fa-font";
+        return "fa-java";
+    }
+
+    // Helper to generate short, informative description
+    function getShortDescription(name) {
+        const descMap = {
+            "Data Types & Variables": "Primitive & reference types",
+            "Control Statements (if, loops, switch)": "Flow control in Java",
+            "OOP Concepts (Class, Object, Methods)": "Blueprint & instances",
+            "Inheritance & Polymorphism": "Reusability & many forms",
+            "Constructors & Method Overloading": "Initialize objects",
+            "Collections Framework (List, Set, Map)": "Dynamic structures",
+            "Exception Handling": "try catch finally",
+            "Strings & StringBuilder": "String manipulation"
+        };
+        return descMap[name] || "Core Java concept";
+    }
+
+    // Navigation / load topic function - same original behavior
+    function loadTopic(file) {
+        // In production, it would redirect to the actual detailed pages.
+        // Since demo context, we simulate navigation with console & alert fallback if needed.
+        // But original expects window.location change.
+        if (file) {
+            window.location.href = file;
+        } else {
+            console.warn("No file specified");
+        }
+    }
+
+    // Render the cards
+    const gridContainer = document.getElementById("javaGrid");
+    if (gridContainer) {
+        javaTopics.forEach(topic => {
+            const card = document.createElement("div");
+            card.className = "java-card";
+            card.setAttribute("data-file", topic.file);
+            
+            // Build card inner structure with icon, title, badge description
+            card.innerHTML = `
+                <div class="card-icon">
+                    <i class="fas ${getTopicIcon(topic.name)}"></i>
+                </div>
+                <div class="card-title">${topic.name}</div>
+                <div class="card-badge">${getShortDescription(topic.name)}</div>
+            `;
+            
+            // Click handler: redirect to respective Java concept detail page
+            card.onclick = (function(filePath) {
+                return function() { loadTopic(filePath); };
+            })(topic.file);
+            
+            gridContainer.appendChild(card);
+        });
+    }
+
+    // Optional: Profile button simple interactive feedback (matches brand)
+    const profileBtn = document.querySelector('.profile-btn');
+    if (profileBtn) {
+        profileBtn.addEventListener('click', () => {
+            alert('✨ Profile section — track your Java progress, upcoming mock scores & more.');
+        });
+    }
+
+    // Small behavior: For demonstration, if any nav link is clicked (Home, Aptitude etc.)
+    // we provide smooth placeholder feedback. But also they can be extended later.
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href === "#" || !href || href === "") {
+                e.preventDefault();
+                // provide elegant feedback for empty demo links
+                const linkText = link.innerText;
+                alert(`🚀 "${linkText}" page is under development. Stay tuned for placement resources!`);
+            }
+            // if actual links are set to real pages (like aptitude.html etc) they'd naturally work.
+        });
+    });
+</script>
+</body>
+</html>
